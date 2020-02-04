@@ -16,6 +16,14 @@
     text-align: center;
     /*min-height: 50px;*/
     /*padding-top: 10px;*/
+    position: relative;
+}
+.input-field::after {
+    display: block;
+    content: '000000000';
+    text-align: right;
+    right: 0;
+    top: 0;
 }
 .resolve-button {
     font-size: 30px;
