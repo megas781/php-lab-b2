@@ -1,42 +1,38 @@
-.form-label {
-    text-align: center;
+@font-face {
+    font-family: 'font-digital-custom';
+    src: url(digital-font.ttf) format("truetype");
 }
-#arr-items-input-view {
-    width: 100%;
+
+.calc-container {
+    margin-top: 24px;
+    margin-bottom: 100px;
+    font-family: font-digital-custom;
 }
-#arr-items-input-view td {
-    padding: 0;
-}
-.arr-item__input {
-    border: 1px solid #cfcfcf;
-    padding: 4px;
-    width: 100%;
+
+.input-field {
+    font-size: 34px;
+    font-family: font-digital-custom;
     display: block;
-    background-color: white;
-    text-decoration: none;
-    color: black;
-    /*text-align: center;*/
-    font-size: 18px;
-}
-a.arr-item__input {
     text-align: center;
+    /*min-height: 50px;*/
+    /*padding-top: 10px;*/
 }
-
-.text-view {
-    width: 360px;
-    font-size: 18px;
-    background-color: white;
-    min-height: 80px;
-    max-height: 160px;
+.resolve-button {
+    font-size: 30px;
+    width: 100%;
+    /*font-style: italic;*/
+    font-family: font-digital-custom;
     border: none;
-    padding: 4px;
-    overflow-y: scroll;
+    display: block;
+    padding: 10px 32px 7px;
+    margin-top: 8px;
+    border-radius: 16px;
+    background-color: #0078b6;
+    color: white;
 }
-
-#form-bottom-controls {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    padding-top: 16px;
+.output {
+    text-align: right;
+    width: 100%;
+    padding: 8px;
+    font-size: 60px;
 }
-
