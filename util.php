@@ -10,53 +10,76 @@ function calculate($val)
         return $val;
     };
 
-    $args = explode('+', $val);
 
+    //Сложение
+
+    $args = explode('+', $val);
     if (count($args) > 1) {
         $sum = 0;
-
-//        echo 'sum';
-//        print_r($args);
         for ($i = 0; $i < count($args); $i++) {
-
-            $arg = calculate($args[$i]);
-
-//            echo 'arg' . $i . ': ' . $arg;
-
-            if (isnum($arg)) {
-                $sum += $arg;
-            } else {
-                echo '($sum:' . calculate($arg) . ')';
-                $sum += calculate($arg);
-            }
+            $sum += calculate($args[$i]);
         }
-//        echo '(return $sum: ' . $sum . ')';
         return $sum;
     }
 
-//    здесь у нас по идеи простая форма "числа и знак умножения"
+    //Вычитание
+    $args = explode('-', $val);
+    if (count($args) > 1) {
+        $subtraction = $args[0];
+
+        for ($i = 1; $i < count($args); $i++) {
+            $subtraction -= calculate($args[$i]);
+        }
+        return $subtraction;
+    }
+
+    //Умножение
     $args = explode('*', $val);
     if (count($args) > 1) {
-//        echo'multi';
-//        print_r($args);
         $sup = 1;
         for ($i = 0; $i < count($args); $i++) {
             $arg = $args[$i];
-//            echo '(($arg'. $i .') = ' . $arg . ')';
-//            echo '('. (isnum($arg) ? 'равен три' : 'не равен, бред') .')';
+
+            $sup *= calculate($arg);
+//            if (isnum($arg)) {
+//                $sup *= calculate($arg);
+//            } else {
+//                return 'Неправильная форма числа';
+//            }
+
+        }
+        return $sup;
+    }
+
+    //Деление знаком "/"
+    $args = explode('/', $val);
+    if (count($args) > 1) {
+        $quotient = $args[0];
+        for ($i = 1; $i < count($args); $i++) {
+            $arg = $args[$i];
+            $quotient /= calculate($arg);
+
+
+        }
+        return $quotient;
+    }
+    //Деление знаком ":"
+    $args = explode(':', $val);
+    if (count($args) > 1) {
+        $quotient = $args[0];
+        for ($i = 1; $i < count($args); $i++) {
+            $arg = $args[$i];
             if (isnum($arg)) {
-                $sup *= $arg;
+                $quotient /= calculate($arg);
             } else {
                 return 'Неправильная форма числа';
             }
 
         }
-//        echo '(return $sup: ' . $sup . ')';
-        return $sup;
+        return $quotient;
     }
 
     //Если дошли до сюда, то строка неисправна
-
     return 'error';
 }
 
