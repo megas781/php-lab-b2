@@ -25,7 +25,7 @@ function calculate($val)
     //Вычитание
     $args = explode('-', $val);
     if (count($args) > 1) {
-        $subtraction = $args[0];
+        $subtraction = calculate($args[0]);
 
         for ($i = 1; $i < count($args); $i++) {
             $subtraction -= calculate($args[$i]);
