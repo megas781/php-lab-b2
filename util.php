@@ -9,7 +9,7 @@ function calculate($val)
 
     if (!$val) return 'error 1';
     if (isnum($val)) {
-        return (string)$val[0] == '!' ? - (int) substr($val, 1) : (int) $val;
+        return (string)$val[0] == '!' ? - (float) substr($val, 1) : (float) $val;
     };
 
     if (!isInputValid($val)) return 'error 2';
@@ -27,7 +27,7 @@ function calculate($val)
 //            var_dump($args[$i]);
             $sum += calculate($args[$i]);
         }
-        return (int) $sum;
+        return (float) $sum;
     }
 
 
@@ -46,7 +46,7 @@ function calculate($val)
 
             $subtraction -= calculate($args[$i]);
         }
-        return (int) $subtraction;
+        return (float) $subtraction;
     }
 
     //Умножение
@@ -60,11 +60,11 @@ function calculate($val)
         $sup = 1;
         for ($i = 0; $i < count($args); $i++) {
             $arg = $args[$i];
-
+//            echo "(args[$i]:" . $args[$i] . ')';
             $sup *= calculate($arg);
 
         }
-        return (int) $sup;
+        return (float) $sup;
     }
 
     //Деление знаком "/"
@@ -81,8 +81,9 @@ function calculate($val)
             $arg = $args[$i];
             $quotient /= calculate($arg);
         }
-        return (int) $quotient;
+        return (float) $quotient;
     }
+
     //Деление знаком ":"
     $args = explode(':', $val);
     foreach ($args as $arg) {
@@ -91,17 +92,12 @@ function calculate($val)
         }
     }
     if (count($args) > 1) {
-        $quotient = $args[0];
+        $quotient = calculate($args[0]);
         for ($i = 1; $i < count($args); $i++) {
             $arg = $args[$i];
-            if (isnum($arg)) {
-                $quotient /= calculate($arg);
-            } else {
-                return 'Неправильная форма числа';
-            }
-
+            $quotient /= calculate($arg);
         }
-        return (int) $quotient;
+        return (float) $quotient;
     }
 
     //Если дошли до сюда, то строка неисправна
@@ -113,19 +109,19 @@ function calculateSq($val)
 {
 //    echo '$valsq:';
 //    var_dump($val);
-    if (!sqValidator($val)) return 'error 1';
-    if (!isInputValid($val)) return 'error 2';
+//    var_dump($val);
+    if (!$val) return 'error 1';
+    if (!sqValidator($val)) return 'error 4';
+    if (!isInputValid($val)) return 'error 5';
 
     if (isnum($val)) {
 //        echo 'fjf';
-        return (string)$val[0] == '!' ? - (int) substr($val, 1) : $val;
+        return (string)$val[0] == '!' ? - (float) substr($val, 1) : $val;
     };
 
     //template (-1)
     if ($val[0] == '(' && $val[strlen($val)-1] == ')' && isnum(substr($val, 1))) {
         $numbb = substr($val, 1, strlen($val)-2);
-//        echo '$numbb:' . $numbb;
-
         return $numbb < 0 ? '!' : '' . abs($numbb);
     }
 
@@ -155,8 +151,6 @@ function calculateSq($val)
     //left side before '('
     $newVal = substr($val, 0, $start);
 
-    // '(..)' part
-
 //    var_dump($val);
     $inBracketsValue = calculateSq(substr($val, $start+1, $end - $start - 2));
 
@@ -168,6 +162,7 @@ function calculateSq($val)
     //right side after ')'
     $newVal .= substr($val, $end); //need +1
 
+//    echo '$newval:';
 //    var_dump($newVal);
 
     return calculateSq($newVal);
@@ -285,3 +280,11 @@ function isInputValid($val) {
 
 //var_dump(calculateSq('(!2)'));
 //var_dump(calculate("5"));
+
+//var_dump(calculateSq('1.4*!10'));
+//$qwe = 1;
+//$qwe *= 1.4;
+//var_dump($qwe);
+//var_dump(calculateSq('4+3'));
+//var_dump(calculateSq('(1.4*!10):!7'));
+

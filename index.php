@@ -15,7 +15,7 @@ if (!isset($_SESSION['history'])) {
 
 
 
-print_r($_POST);
+//print_r($_POST);
 
 if (isset($_POST['val'])) {
     $res = calculateSq($_POST['val']);
