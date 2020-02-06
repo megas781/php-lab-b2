@@ -14,8 +14,7 @@ function calculate($val)
 
     if (!isInputValid($val)) return 'error 2';
 
-    //Сложение
-
+    //СЛОЖЕНИЕ
     $args = explode('+', $val);
     foreach ($args as $arg) {
         if ($arg === '') {
@@ -25,15 +24,14 @@ function calculate($val)
     if (count($args) > 1) {
         $sum = 0;
         for ($i = 0; $i < count($args); $i++) {
-            var_dump($args[$i]);
+//            var_dump($args[$i]);
             $sum += calculate($args[$i]);
         }
-//        var_dump($sum);
         return (int) $sum;
     }
 
 
-    //Вычитание
+    //ВЫЧИТАНИЕ
     $args = explode('-', $val);
     foreach ($args as $arg) {
         if ($arg === '') {
@@ -77,12 +75,11 @@ function calculate($val)
         }
     }
     if (count($args) > 1) {
-        $quotient = $args[0];
+
+        $quotient = calculate($args[0]);
         for ($i = 1; $i < count($args); $i++) {
             $arg = $args[$i];
             $quotient /= calculate($arg);
-
-
         }
         return (int) $quotient;
     }
@@ -127,7 +124,7 @@ function calculateSq($val)
     //template (-1)
     if ($val[0] == '(' && $val[strlen($val)-1] == ')' && isnum(substr($val, 1))) {
         $numbb = substr($val, 1, strlen($val)-2);
-        echo '$numbb:' . $numbb;
+//        echo '$numbb:' . $numbb;
 
         return $numbb < 0 ? '!' : '' . abs($numbb);
     }
@@ -171,7 +168,7 @@ function calculateSq($val)
     //right side after ')'
     $newVal .= substr($val, $end); //need +1
 
-    var_dump($newVal);
+//    var_dump($newVal);
 
     return calculateSq($newVal);
 }
@@ -281,10 +278,10 @@ function isInputValid($val) {
 }
 
 
-echo '<pre>';
+//echo '<pre>';
 
 
-echo 'result: ' . calculate('(16-1)/!3');
+//echo 'result: ' . calculateSq('(!16+1)/!3');
 
 //var_dump(calculateSq('(!2)'));
 //var_dump(calculate("5"));
