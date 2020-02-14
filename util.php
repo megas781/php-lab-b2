@@ -4,10 +4,8 @@
 function calculate($val)
 {
 
-//    echo '$val';
-//    var_dump($val);
-
-    if (!$val) return 'error 1';
+    if (!isset($val)) return 'error 1';
+    if (strlen($val) == 0) return 'error 7';
     if (isnum($val)) {
         return (string)$val[0] == '!' ? - (float) substr($val, 1) : (float) $val;
     };
@@ -107,25 +105,21 @@ function calculate($val)
 // Подсчет выражения со скобками на основе готовой функции calculate
 function calculateSq($val)
 {
-//    echo '$valsq:';
-//    var_dump($val);
-//    var_dump($val);
-    if (!$val) return 'error 1';
+
+    if (!isset($val)) return 'error 1';
+    if (strlen($val) == 0) return 'error 7';
     if (!sqValidator($val)) return 'error 4';
     if (!isInputValid($val)) return 'error 5';
 
     if (isnum($val)) {
-//        echo 'fjf';
         return (string)$val[0] == '!' ? - (float) substr($val, 1) : $val;
     };
 
-    //template (-1)
     if ($val[0] == '(' && $val[strlen($val)-1] == ')' && isnum(substr($val, 1))) {
         $numbb = substr($val, 1, strlen($val)-2);
         return $numbb < 0 ? '!' : '' . abs($numbb);
     }
 
-    //
     $start = strpos($val, '(');
 
     if ($start === false) {
@@ -191,9 +185,9 @@ function isnum($x): bool
 {
     $x = (string)$x;
 //    Аргумент должен существовать
-    if (!$x) return false;
+    if (!isset($x)) return false;
 //  Аргумент не должен начинаться с разделителя или нуля
-    if ($x[0] == '.' || ($x[0] == '0' && $x[1] != '.')) return false;
+    if (strlen($x) == 0 || $x[0] == '.' || (strlen($x) >= 2 && $x[0] == '0' && $x[1] != '.')) return false;
 //  Аргумент не должен оканчиваться разделителем
     if ($x[strlen($x) - 1] == '.') return false;
 //    Перебираем все символы аргумента
